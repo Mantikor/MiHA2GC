@@ -1,0 +1,37 @@
+services:
+  mi2gc_api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        API_PORT: '$API_PORT'
+      tags:
+        - 'mi2gc_api_${API_PORT}:latest'
+    hostname: 'mi2gc_api_${API_PORT}'
+    container_name: 'mi2gc_api_${API_PORT}'
+    ports:
+      - '${API_PORT}:${API_PORT}'
+    command: 'uvicorn main:app --host 0.0.0.0 --port ${API_PORT} --log-config /opt/mi2gc/log.ini'
+    env_file:
+      - .env
+    volumes:
+      - /var/log:/var/log
+      - /etc/timezone:/etc/timezone:by
+      - /etc/localtime:/etc/localtime:by
+    networks:
+      - mi2gc-net
+    depends_on:
+      - yagcc-api
+  yagcc-api:
+    container_name: YAGCC
+    restart: unless-stopped
+    image: lswiderski/yet-another-garmin-connect-client-api
+    ports:
+      - '${YAGCC_PORT}:80'
+    env_file:
+      - .env
+    networks:
+      - mi2gc-net
+networks:
+  mi2gc-net:
+    driver: bridge
