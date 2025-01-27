@@ -125,7 +125,7 @@ vi .env
 docker compose up -d
 
 # после запуска можно посмотреть логи
-docker logs -f miha2gc-mi2gc_api
+docker logs -f mi2gc_api_{API_PORT}
 ```
 
 ### Код для расчёта дополнительных данных по весу и импедансу взят [отсюда](https://github.com/RobertWojtowicz/export2garmin).
