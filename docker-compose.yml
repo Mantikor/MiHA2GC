@@ -5,8 +5,6 @@ services:
       dockerfile: Dockerfile
       args:
         API_PORT: '$API_PORT'
-      tags:
-        - 'mi2gc_api_${API_PORT}:latest'
     hostname: 'mi2gc_api_${API_PORT}'
     container_name: 'mi2gc_api_${API_PORT}'
     ports:
