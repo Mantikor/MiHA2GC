@@ -26,6 +26,9 @@ services:
     image: lswiderski/yet-another-garmin-connect-client-api
     ports:
       - '${YAGCC_PORT}:80'
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     env_file:
       - .env
     networks:
